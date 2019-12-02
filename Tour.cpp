@@ -57,7 +57,25 @@ void Tour::shuffle_cities() {
 }
 
 void Tour::mutate() {
+    random_device rd;
+    default_random_engine generator(rd());
+    uniform_int_distribution<int> intDistribution(0, 100);
 
+    for(unsigned int i = 1;i < cities.size() - 1;i++) {
+        int mutateVal = intDistribution(generator);
+        int direction;
+
+        if(mutateVal < 15) {
+
+            if(mutateVal % 2 == 1) {
+                direction = 1;
+            } else {
+                direction = -1;
+            }
+
+            swap(cities[i], cities[i + direction]);
+        }
+    }
 }
 
 bool Tour::contains_city(City * other) {

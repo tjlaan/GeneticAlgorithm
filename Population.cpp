@@ -54,10 +54,16 @@ void Population::iterate() {
     Tour parent1 = *select_parent();
     Tour parent2 = *select_parent();
 
+    random_device rd;
+    default_random_engine generator(rd());
+    uniform_int_distribution<int> intDistribution(0, 100);
+
     for(unsigned int i = 1;i < tours.size();i++) {
         Tour* newTour = new Tour(&parent1, &parent2);
         delete tours[i];
-        newTour -> mutate();
+        if(intDistribution(generator) < 25) {
+            newTour -> mutate();
+        }
         tours[i] = newTour;
     }
 

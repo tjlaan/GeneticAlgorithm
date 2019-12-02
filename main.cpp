@@ -24,10 +24,12 @@ int main() {
     double best_distance = pop -> get_best_distance();
     int iterations = 0;
 
-    while(best_fitness/base_fitness < 1.3 && iterations < 100) {
+    while(best_fitness/base_fitness < 1.3 && iterations < 1001) {
         pop -> iterate();
 
-        cout << "Iteration " << iterations << ": Distance " << pop -> get_best_distance() << endl;
+        iterations++;
+
+        cout << "Iteration " << iterations << " : Distance " << pop -> get_best_distance() << endl;
 
         if(best_fitness < pop -> get_best_fitness()) {
             best_fitness = pop -> get_best_fitness();
@@ -38,10 +40,11 @@ int main() {
         }
 
         cout << "Best distance so far: " << best_distance << endl;
-        cout << "Improvement over base so far: " << best_fitness/base_fitness << endl << endl;
-
-        iterations++;
+        cout << "Improvement over base so far: " << best_fitness/base_fitness << " times as fit." << endl << endl;
     }
+
+    cout << "Number of iterations: " << iterations;
+
 
     return 0;
 }
