@@ -16,6 +16,7 @@ public:
     Tour* select_parent();
     double get_best_fitness() { return tours[0] -> get_fitness(); }
     double get_best_distance() { return tours[0] -> get_tour_distance(); }
+    vector<City*> get_best_route() { return tours[0] -> get_route(); }
     void iterate();
 };
 

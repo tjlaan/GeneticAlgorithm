@@ -35,6 +35,7 @@ public:
     void mutate();
     double get_tour_distance() const;
     double get_fitness() { return fitness; };
+    vector<City*> get_route() { return cities; };
     friend ostream& operator << (ostream&, const Tour&);
 };
 

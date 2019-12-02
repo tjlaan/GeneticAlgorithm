@@ -66,7 +66,6 @@ void Tour::mutate() {
         int direction;
 
         if(mutateVal < 15) {
-
             if(mutateVal % 2 == 1) {
                 direction = 1;
             } else {
@@ -76,6 +75,8 @@ void Tour::mutate() {
             swap(cities[i], cities[i + direction]);
         }
     }
+
+    fitness = 1/get_tour_distance() * 10000;
 }
 
 bool Tour::contains_city(City * other) {

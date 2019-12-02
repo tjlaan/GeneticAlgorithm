@@ -20,31 +20,47 @@ int main() {
     Population* pop = new Population(master);
 
     double base_fitness = pop -> get_best_fitness();
+    double base_distance = pop -> get_best_distance();
+    vector<City*> base_route = pop -> get_best_route();
     double best_fitness = base_fitness;
     double best_distance = pop -> get_best_distance();
+    vector<City*> best_route = pop -> get_best_route();
     int iterations = 0;
 
-    while(best_fitness/base_fitness < 1.3 && iterations < 1001) {
+    while(best_fitness/base_fitness < 1.3 && iterations < 1000) {
         pop -> iterate();
 
         iterations++;
 
         cout << "Iteration " << iterations << " : Distance " << pop -> get_best_distance() << endl;
 
+        cout << "Best distance so far: " << best_distance << endl;
+
         if(best_fitness < pop -> get_best_fitness()) {
             best_fitness = pop -> get_best_fitness();
             best_distance = pop -> get_best_distance();
+            best_route = pop -> get_best_route();
             cout << "Improvement made. " << endl;
         } else {
             cout << "No improvement. " << endl;
         }
 
-        cout << "Best distance so far: " << best_distance << endl;
         cout << "Improvement over base so far: " << best_fitness/base_fitness << " times as fit." << endl << endl;
     }
 
-    cout << "Number of iterations: " << iterations;
-
+    cout << endl << "Number of iterations: " << iterations << endl;
+    cout << "Base Distance: " << base_distance << endl;
+    cout << "Best Distance: " << best_distance << endl << endl;
+    cout << "Base Route:" << endl;
+    for(City* c : base_route) {
+        cout << *c << endl;
+    }
+    cout << *base_route[0] << endl << endl;
+    cout << "Best Route:" << endl;
+    for(City* c : best_route) {
+        cout << *c << endl;
+    }
+    cout << *best_route[0];
 
     return 0;
 }
