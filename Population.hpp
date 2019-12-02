@@ -9,10 +9,13 @@
 
 class Population {
 private:
+    double base_fitness;
     vector<Tour*> tours;
 public:
     Population(vector<City*> c);
     friend ostream& operator << (ostream&, const Population&);
+    Tour* select_parent();
+    void crossover(Tour*, Tour*);
 };
 
 

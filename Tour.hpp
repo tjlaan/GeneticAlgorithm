@@ -11,18 +11,23 @@
 
 using namespace std;
 
+static int TOUR_NUM = 0;
+
 class Tour {
 private:
+    string name;
     double fitness;
     vector<City*> cities;
-    double get_city_distance(City*, City*);
-    double get_tour_distance();
+    double get_city_distance(City*, City*) const;
     void shuffle_cities();
+    bool contains_city(City*);
 public:
     Tour(vector<City*> cities) : cities(cities) {
+        name = "Tour " + to_string(TOUR_NUM++);
         shuffle_cities();
         fitness = 1/get_tour_distance() * 10000;
     }
+    double get_tour_distance() const;
     double get_fitness() { return fitness; };
     friend ostream& operator << (ostream&, const Tour&);
 };

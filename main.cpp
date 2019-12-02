@@ -18,7 +18,10 @@ vector<City*> generate_master() {
 int main() {
     auto master = generate_master();
     Population* pop = new Population(master);
-    cout << *pop;
+
+    for(int k = 0;k < 10;k++) {
+        cout << *(pop->select_parent());
+    }
 
     return 0;
 }

@@ -7,13 +7,13 @@
 #include <iostream>
 #include "Tour.hpp"
 
-double Tour::get_city_distance(City* c1, City* c2) {
+double Tour::get_city_distance(City* c1, City* c2) const {
     int xDistance = abs((c1 -> get_x()) - (c2 -> get_x()));
     int yDistance = abs((c1 -> get_y()) - (c2 -> get_y()));
     return sqrt(xDistance * xDistance + yDistance * yDistance);
 }
 
-double Tour::get_tour_distance() {
+double Tour::get_tour_distance() const {
     double total_distance = 0;
     for(unsigned int i = 0; i < cities.size() - 1;i++) {
         total_distance += get_city_distance(cities[i], cities[i + 1]);
@@ -30,12 +30,18 @@ void Tour::shuffle_cities() {
     }
 }
 
-ostream& operator<<(ostream& out, const Tour& obj) {
-    out << "Fitness: " << obj.fitness << endl;
-
-    for(City* c : obj.cities) {
-        out << *c << endl;
+bool Tour::contains_city(City * other) {
+    for(City* c : cities) {
+        if(c -> get_name() == other -> get_name()) {
+            return true;
+        }
     }
+
+    return false;
+}
+
+ostream& operator<<(ostream& out, const Tour& obj) {
+    out << obj.name << " - Distance: " << obj.get_tour_distance() << endl;
 
     return out;
 }
