@@ -19,8 +19,28 @@ int main() {
     auto master = generate_master();
     Population* pop = new Population(master);
 
-    for(int k = 0;k < 10;k++) {
-        cout << *(pop->select_parent());
+    double base_fitness = pop -> get_best_fitness();
+    double best_fitness = base_fitness;
+    double best_distance = pop -> get_best_distance();
+    int iterations = 0;
+
+    while(best_fitness/base_fitness < 1.3 && iterations < 100) {
+        pop -> iterate();
+
+        cout << "Iteration " << iterations << ": Distance " << pop -> get_best_distance() << endl;
+
+        if(best_fitness < pop -> get_best_fitness()) {
+            best_fitness = pop -> get_best_fitness();
+            best_distance = pop -> get_best_distance();
+            cout << "Improvement made. " << endl;
+        } else {
+            cout << "No improvement. " << endl;
+        }
+
+        cout << "Best distance so far: " << best_distance << endl;
+        cout << "Improvement over base so far: " << best_fitness/base_fitness << endl << endl;
+
+        iterations++;
     }
 
     return 0;

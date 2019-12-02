@@ -7,6 +7,32 @@
 #include <iostream>
 #include "Tour.hpp"
 
+Tour::Tour(Tour* parent1, Tour* parent2) {
+    name = "Tour " + to_string(TOUR_NUM++);
+
+    random_device rd;
+    default_random_engine generator(rd());
+    uniform_int_distribution<int> intDistribution(0, 31);
+    int index = intDistribution(generator);
+    for(int i = 0;i < index;i++) {
+        cities.push_back(parent1 -> cities[i]);
+    }
+    for(int i = 0;i < 32;i++) {
+        City* next = parent2 -> cities[i];
+        if(!contains_city(next)) {
+            cities.push_back(next);
+        }
+    }
+
+    fitness = 1/get_tour_distance() * 10000;
+}
+
+Tour::Tour(const Tour& other) {
+    for(int i = 0;i < 32;i++) {
+            cities.push_back(other.cities[i]);
+    }
+}
+
 double Tour::get_city_distance(City* c1, City* c2) const {
     int xDistance = abs((c1 -> get_x()) - (c2 -> get_x()));
     int yDistance = abs((c1 -> get_y()) - (c2 -> get_y()));
@@ -30,6 +56,10 @@ void Tour::shuffle_cities() {
     }
 }
 
+void Tour::mutate() {
+
+}
+
 bool Tour::contains_city(City * other) {
     for(City* c : cities) {
         if(c -> get_name() == other -> get_name()) {
@@ -38,6 +68,16 @@ bool Tour::contains_city(City * other) {
     }
 
     return false;
+}
+
+Tour& Tour::operator=(Tour rhs){
+    mySwap(*this, rhs);
+    return *this;
+}
+
+void mySwap(Tour& first, Tour& second) {
+    using std::swap;
+    swap(first.cities, second.cities);
 }
 
 ostream& operator<<(ostream& out, const Tour& obj) {

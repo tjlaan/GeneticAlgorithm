@@ -9,13 +9,14 @@
 
 class Population {
 private:
-    double base_fitness;
     vector<Tour*> tours;
 public:
     Population(vector<City*> c);
     friend ostream& operator << (ostream&, const Population&);
     Tour* select_parent();
-    void crossover(Tour*, Tour*);
+    double get_best_fitness() { return tours[0] -> get_fitness(); }
+    double get_best_distance() { return tours[0] -> get_tour_distance(); }
+    void iterate();
 };
 
 

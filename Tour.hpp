@@ -22,11 +22,17 @@ private:
     void shuffle_cities();
     bool contains_city(City*);
 public:
+    Tour(Tour* parent1, Tour* parent2);
     Tour(vector<City*> cities) : cities(cities) {
         name = "Tour " + to_string(TOUR_NUM++);
         shuffle_cities();
         fitness = 1/get_tour_distance() * 10000;
     }
+    Tour(const Tour& other);
+    ~Tour() = default;
+    Tour& operator= (Tour rhs);
+    friend void mySwap(Tour&, Tour&);
+    void mutate();
     double get_tour_distance() const;
     double get_fitness() { return fitness; };
     friend ostream& operator << (ostream&, const Tour&);

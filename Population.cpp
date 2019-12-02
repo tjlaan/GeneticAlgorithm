@@ -18,8 +18,6 @@ Population::Population(vector<City*> c) {
     }
 
     swap(tours[0],tours[bestTour]);
-
-    base_fitness = tours[0] -> get_fitness();
 }
 
 Tour* Population::select_parent() {
@@ -27,11 +25,10 @@ Tour* Population::select_parent() {
 
     random_device rd;
     default_random_engine generator(rd());
-    uniform_int_distribution<int> intDistribution(1, 31);
+    uniform_int_distribution<int> intDistribution(0, 31);
 
     while(pool.size() < 5) {
         int index = intDistribution(generator);
-        cout << index << " ";
         bool found = false;
         for(unsigned int i = 0;i < pool.size();i++) {
             if(pool[i] == tours[index]) {
@@ -51,6 +48,27 @@ Tour* Population::select_parent() {
     }
 
     return best;
+}
+
+void Population::iterate() {
+    Tour parent1 = *select_parent();
+    Tour parent2 = *select_parent();
+
+    for(unsigned int i = 1;i < tours.size();i++) {
+        Tour* newTour = new Tour(&parent1, &parent2);
+        delete tours[i];
+        newTour -> mutate();
+        tours[i] = newTour;
+    }
+
+    unsigned int bestTour = 0;
+    for(unsigned int i = 1;i < tours.size();i++) {
+        if(tours[bestTour] -> get_fitness() < tours[i] -> get_fitness()) {
+            bestTour = i;
+        }
+    }
+
+    swap(tours[0],tours[bestTour]);
 }
 
 ostream& operator<<(ostream& out, const Population& obj) {

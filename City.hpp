@@ -17,6 +17,7 @@ private:
     int y;
 public:
     City(string name, int x, int y) : name(name), x(x), y(y) {}
+    ~City() = default;
     string get_name() { return name; }
     int get_x() { return x; }
     int get_y() { return y; }
