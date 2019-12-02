@@ -11,8 +11,8 @@ class Population {
 private:
     vector<Tour*> tours;
 public:
-    Population() = default;
-    int get_tour_distance();
+    Population(vector<City*> c);
+    friend ostream& operator << (ostream&, const Population&);
 };
 
 

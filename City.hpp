@@ -20,6 +20,7 @@ public:
     string get_name() { return name; }
     int get_x() { return x; }
     int get_y() { return y; }
+    friend ostream& operator << (ostream&, const City&);
 };
 
 
